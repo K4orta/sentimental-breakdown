@@ -1,7 +1,6 @@
 package sentimental
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -29,8 +28,21 @@ func TestMeasureSingleNegativeWord(t *testing.T) {
 
 func TestMeasureMixed(t *testing.T) {
 	score := Measure("Come out to the farm and eat my ass, idiot.")
-	fmt.Println(score)
 	if score == 0 {
-		t.Error("\"obnoxious\" does not score negatively")
+		t.Error("Mixed tokens test failed")
+	}
+}
+
+func TestFullMeasureNegative(t *testing.T) {
+	score := FullMeasure("I'm real mad about the awful churro I just ate.")
+	if score.Score == 0 {
+		t.Error("Negative FullMeasure test failed")
+	}
+}
+
+func TestFullMeasureNeutral(t *testing.T) {
+	score := FullMeasure("I opened the .XFL file and was thrust into an incredible world of high octane hardcore football for all the real daredevils out there.")
+	if score.Comparative != 0 {
+		t.Error("Neutral phrase FullMeasure test failed")
 	}
 }
